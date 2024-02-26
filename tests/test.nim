@@ -1,5 +1,5 @@
 import unittest
-import sourcegens/codegens
+import sourcegens
 
 test "nop":
   discard
