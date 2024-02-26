@@ -1,7 +1,7 @@
 import std/lists
 import std/tables
 from   letUtils import scope
-import ./assertions
+import ./private/assertions
 
 type
   OverridableTable*[T] = object

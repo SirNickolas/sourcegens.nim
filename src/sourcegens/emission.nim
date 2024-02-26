@@ -1,4 +1,4 @@
-import ./assertions
+import ./private/assertions
 
 type
   EmitterProc* = proc (chunk: openArray[char]) {.gcSafe.}
