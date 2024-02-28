@@ -1,4 +1,4 @@
-version     = "0.1.0"
+version     = "0.1.1"
 author      = "Nickolay Bukreyev"
 description = "A toolkit for writing source-code generators targeting arbitrary languages"
 license     = "MIT"
@@ -6,6 +6,6 @@ license     = "MIT"
 srcDir = "src"
 
 requires(
-  "nim >= 1.6.14",
+  "nim >= 1.6.0",
   "letUtils >= 1.1.1",
 )
