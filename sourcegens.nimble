@@ -1,4 +1,4 @@
-version     = "0.1.1"
+version     = "0.1.2"
 author      = "Nickolay Bukreyev"
 description = "A toolkit for writing source-code generators targeting arbitrary languages"
 license     = "MIT"
