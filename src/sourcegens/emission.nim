@@ -9,7 +9,7 @@ type
     action: EmitterProc
     curIndent, indentSize: int
     indentBuffer: string
-    bol: bool
+    binary, bol: bool
     loc: Location
     stack: seq[int] # Stack of active indentation depths in the original source text.
 
@@ -23,8 +23,15 @@ func raiseIndentError {.noReturn, noInline.} =
 
 declareRaiser raiseEmitterDefect, EmitterDefect
 
-func initEmitter*(indent: sink string; action: sink EmitterProc): Emitter =
-  Emitter(action: action, indentSize: indent.len, indentBuffer: indent, bol: true, stack: @[0])
+func initEmitter*(binary: bool; indent: sink string; action: sink EmitterProc): Emitter =
+  Emitter(
+    action: action,
+    indentSize: indent.len,
+    indentBuffer: indent,
+    binary: binary,
+    bol: true,
+    stack: @[0],
+  )
 
 proc endSection*(self) =
   if self.bol and self.loc == locInSection:
@@ -58,7 +65,7 @@ iterator byLine(chunk: openArray[char]): (int, int, int, int) {.noSideEffect.} =
     while i != chunk.len and chunk[i] in {' ', '\t'}:
       i += 1
     let textStart = i
-    while i != chunk.len and chunk[i] != '\n':
+    while i != chunk.len and chunk[i] != '\n': # We do not support `"\p" == "\r"`.
       i += 1
     let textEnd = i
     i += ord i != chunk.len
@@ -67,7 +74,10 @@ iterator byLine(chunk: openArray[char]): (int, int, int, int) {.noSideEffect.} =
 proc separateSections(self) =
   if self.loc != locInSection:
     if self.loc == locAfterSection:
-      self.action "\n"
+      when "\p" == "\n":
+        self.action "\n"
+      else:
+        self.action "\p".toOpenArray(self.binary.ord, 1)
     self.loc = locInSection
 
 proc autoIndent(self; indentSize: Natural) =

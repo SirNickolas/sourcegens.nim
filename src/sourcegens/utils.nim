@@ -1,9 +1,12 @@
-from std/strutils import dedent
+from std/strutils import dedent, replace
 
 func dd*(s: string): string {.compileTime.} =
   ##[
-    This function simply invokes `strutils.dedent`_ at compile time. That’s it.
+    Dedent the input string and replace all occurrencies of `'\n'` in it with `"\p"`.
 
-    .. _strutils.dedent: https://nim-lang.org/docs/strutils.html#dedent,string,Natural
+    **See also:**
+    * std/strutils.`dedent <https://nim-lang.org/docs/strutils.html#dedent,string,Natural>`_
   ]##
-  s.dedent
+  result = s.dedent
+  when "\p" != "\n":
+    result = result.replace("\n", "\p")
