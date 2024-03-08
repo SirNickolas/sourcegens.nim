@@ -14,7 +14,11 @@ suite "`identStyle`":
     check convertStyle("r2d2", st) == "r2d2"
     check convertStyle("a.1/b.2", st) == "a1B2"
     check convertStyle("0a", st) == "0a"
-    check convertStyle("0A", st) == "0A"
+    check convertStyle("0A", st) == "0a"
+    check convertStyle("0Ab", st) == "0Ab"
+    check convertStyle("__PRETTY_FUNCTION__", st) == "_prettyFunction"
+    check convertStyle("OS_ERROR", st) == "osError"
+    check convertStyle("OSError", st) == "oSError"
 
   test "Converts to Pascal case":
     const st = initIdentStyle(initial = lcUpper, wordInitial = lcUpper)
@@ -28,7 +32,11 @@ suite "`identStyle`":
     check convertStyle("r2d2", st) == "R2d2"
     check convertStyle("a.1/b.2", st) == "A1B2"
     check convertStyle("0a", st) == "0a"
-    check convertStyle("0A", st) == "0A"
+    check convertStyle("0A", st) == "0a"
+    check convertStyle("0Ab", st) == "0Ab"
+    check convertStyle("__PRETTY_FUNCTION__", st) == "_PrettyFunction"
+    check convertStyle("OS_ERROR", st) == "OsError"
+    check convertStyle("OSError", st) == "OSError"
 
   test "Converts to snake case":
     const st = initIdentStyle(wordSep = "_")
@@ -42,7 +50,11 @@ suite "`identStyle`":
     check convertStyle("r2d2", st) == "r_2d_2"
     check convertStyle("a.1/b.2", st) == "a_1_b_2"
     check convertStyle("0a", st) == "0a"
-    check convertStyle("0A", st) == "0_a"
+    check convertStyle("0A", st) == "0a"
+    check convertStyle("0Ab", st) == "0_ab"
+    check convertStyle("__PRETTY_FUNCTION__", st) == "_pretty_function_"
+    check convertStyle("OS_ERROR", st) == "os_error"
+    check convertStyle("OSError", st) == "o_s_error"
 
   test "Converts to camel case with dollars":
     const st =
@@ -57,4 +69,8 @@ suite "`identStyle`":
     check convertStyle("r2d2", st) == "r2d2"
     check convertStyle("a.1/b.2", st) == "a1B2"
     check convertStyle("0a", st) == "0a"
-    check convertStyle("0A", st) == "0A"
+    check convertStyle("0A", st) == "0a"
+    check convertStyle("0Ab", st) == "0Ab"
+    check convertStyle("__PRETTY_FUNCTION__", st) == "_prettyFunction"
+    check convertStyle("OS_ERROR", st) == "osError"
+    check convertStyle("OSError", st) == "oSError"

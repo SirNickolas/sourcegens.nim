@@ -1,3 +1,4 @@
+from std/sequtils import anyIt
 from std/strutils import toLowerAscii, toUpperAscii
 
 type
@@ -37,11 +38,14 @@ func convertStyle*(s: openArray[char]; style: IdentStyle): string =
       i += 1
   result.add s[i].changeCase style.initial
 
+  let regularLetters =
+    if s.toOpenArray(i + 1, n - 1).anyIt it in 'a' .. 'z': 'a' .. 'z' else: 'A' .. 'Z'
+    # If there are no lowercase letters, treat uppercase as lowercase.
   var midWord = true
   var needSep = true
   for i in i + 1 ..< n:
     let c = s[i]
-    if c not_in 'a' .. 'z':
+    if c not_in regularLetters:
       midWord = false
       if c not_in style.alphabet:
         if needSep:
