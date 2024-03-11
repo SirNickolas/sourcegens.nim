@@ -47,19 +47,22 @@ func convertStyle*(s: openArray[char]; style: IdentStyle): string =
     needSep = true
   for i in i + 1 ..< n:
     let c = s[i]
-    if c not_in '0' .. '9':
-      if midNum:
-        midNum = false
+    block blk:
+      if c not_in '0' .. '9':
+        if midNum:
+          midNum = false
+          midWord = false
+        if c in regularLetters:
+          break blk
         midWord = false
-      if c not_in regularLetters:
-        midWord = false
-        if c not_in style.alphabet:
-          if needSep:
-            result.add style.wordSep
-            needSep = false
-          continue
-    else:
-      midNum = true
+      else:
+        midNum = true
+
+      if c not_in style.alphabet:
+        if needSep:
+          result.add style.wordSep
+          needSep = false
+        continue
 
     result.add s[i].changeCase do:
       if midWord:

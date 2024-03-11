@@ -68,9 +68,8 @@ suite "`identStyle`":
     check convertStyle("OS_ERROR", st) == "os_error"
     check convertStyle("OSError", st) == "o_s_error"
 
-  test "Converts to camel case with dollars":
-    const st =
-      initIdentStyle(wordInitial = lcUpper, alphabet = {'A' .. 'Z', 'a' .. 'z', '0' .. '9', '$'})
+  test "Converts to camel case with custom alphabet":
+    const st = initIdentStyle(wordInitial = lcUpper, alphabet = {'A' .. 'Z', 'a' .. 'z', '$'})
     check convertStyle("", st) == ""
     check convertStyle("abc", st) == "abc"
     check convertStyle("aX", st) == "aX"
@@ -80,13 +79,13 @@ suite "`identStyle`":
     check convertStyle("abCDef", st) == "abCDef"
     check convertStyle("ab-cd-ef", st) == "abCdEf"
     check convertStyle("$_ab_$cd", st) == "$Ab$cd"
-    check convertStyle("r2d2", st) == "r2D2"
-    check convertStyle("a.1/b.2", st) == "a1B2"
-    check convertStyle("abc123def", st) == "abc123Def"
-    check convertStyle("ABC123DEF", st) == "abc123Def"
-    check convertStyle("0a", st) == "0a"
-    check convertStyle("0A", st) == "0a"
-    check convertStyle("0Ab", st) == "0Ab"
+    check convertStyle("r2d2", st) == "rD"
+    check convertStyle("a.1/b.2", st) == "aB"
+    check convertStyle("abc123def", st) == "abcDef"
+    check convertStyle("ABC123DEF", st) == "abcDef"
+    check convertStyle("0a", st) == "_a"
+    check convertStyle("0A", st) == "_a"
+    check convertStyle("0Ab", st) == "_ab"
     check convertStyle("__PRETTY_FUNCTION__", st) == "_prettyFunction"
     check convertStyle("OS_ERROR", st) == "osError"
     check convertStyle("OSError", st) == "oSError"
