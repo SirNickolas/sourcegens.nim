@@ -13,7 +13,7 @@ func initIdentStyle*(
   initial = lcLower;
   wordInitial = lcLower;
   rest = lcLower;
-  wordSep = "";
+  wordSep: sink string = "";
   alphabet = {'A' .. 'Z', 'a' .. 'z', '0' .. '9'};
 ): IdentStyle {.inline.} =
   IdentStyle(
@@ -41,17 +41,25 @@ func convertStyle*(s: openArray[char]; style: IdentStyle): string =
   let regularLetters =
     if s.toOpenArray(i + 1, n - 1).anyIt it in 'a' .. 'z': 'a' .. 'z' else: 'A' .. 'Z'
     # If there are no lowercase letters, treat uppercase as lowercase.
-  var midWord = true
-  var needSep = true
+  var
+    midNum = false
+    midWord = true
+    needSep = true
   for i in i + 1 ..< n:
     let c = s[i]
-    if c not_in regularLetters:
-      midWord = false
-      if c not_in style.alphabet:
-        if needSep:
-          result.add style.wordSep
-          needSep = false
-        continue
+    if c not_in '0' .. '9':
+      if midNum:
+        midNum = false
+        midWord = false
+      if c not_in regularLetters:
+        midWord = false
+        if c not_in style.alphabet:
+          if needSep:
+            result.add style.wordSep
+            needSep = false
+          continue
+    else:
+      midNum = true
 
     result.add s[i].changeCase do:
       if midWord:
