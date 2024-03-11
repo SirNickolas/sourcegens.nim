@@ -39,7 +39,7 @@ func convertStyle*(s: openArray[char]; style: IdentStyle): string =
   result.add s[i].changeCase style.initial
 
   let regularLetters =
-    if s.toOpenArray(i + 1, n - 1).anyIt it in 'a' .. 'z': 'a' .. 'z' else: 'A' .. 'Z'
+    if s.toOpenArray(i, n - 1).anyIt it in 'a' .. 'z': 'a' .. 'z' else: 'A' .. 'Z'
     # If there are no lowercase letters, treat uppercase as lowercase.
   var
     midNum = false

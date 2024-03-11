@@ -6,6 +6,8 @@ suite "`identStyle`":
     const st = initIdentStyle(wordInitial = lcUpper)
     check convertStyle("", st) == ""
     check convertStyle("abc", st) == "abc"
+    check convertStyle("aX", st) == "aX"
+    check convertStyle("abX", st) == "abX"
     check convertStyle("A_b_c", st) == "aBC"
     check convertStyle("-a-b-c", st) == "_aBC"
     check convertStyle("abCDef", st) == "abCDef"
@@ -26,6 +28,8 @@ suite "`identStyle`":
     const st = initIdentStyle(initial = lcUpper, wordInitial = lcUpper)
     check convertStyle("", st) == ""
     check convertStyle("abc", st) == "Abc"
+    check convertStyle("aX", st) == "AX"
+    check convertStyle("abX", st) == "AbX"
     check convertStyle("A_b_c", st) == "ABC"
     check convertStyle("-a-b-c", st) == "_ABC"
     check convertStyle("abCDef", st) == "AbCDef"
@@ -46,6 +50,8 @@ suite "`identStyle`":
     const st = initIdentStyle(wordSep = "_")
     check convertStyle("", st) == ""
     check convertStyle("abc", st) == "abc"
+    check convertStyle("aX", st) == "a_x"
+    check convertStyle("abX", st) == "ab_x"
     check convertStyle("A_b_c", st) == "a_b_c"
     check convertStyle("-a-b-c", st) == "_a_b_c"
     check convertStyle("abCDef", st) == "ab_c_def"
@@ -67,6 +73,8 @@ suite "`identStyle`":
       initIdentStyle(wordInitial = lcUpper, alphabet = {'A' .. 'Z', 'a' .. 'z', '0' .. '9', '$'})
     check convertStyle("", st) == ""
     check convertStyle("abc", st) == "abc"
+    check convertStyle("aX", st) == "aX"
+    check convertStyle("abX", st) == "abX"
     check convertStyle("A_b_c", st) == "aBC"
     check convertStyle("-a-b-c", st) == "_aBC"
     check convertStyle("abCDef", st) == "abCDef"
